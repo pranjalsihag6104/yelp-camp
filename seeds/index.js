@@ -26,9 +26,29 @@ const seedDB=async ()=>{
         author:'67e47c8f7233f679b16ce337',
         location:`${cities[random1000].city},${cities[random1000].state}`,
         title:`${sample(descriptors)} ${sample(places)}`,
-        image: `https://picsum.photos/400?random=${Math.random()}`,
         description: '  Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora itaque nobis accusamus minus omnis asperiores totam quasi fuga maxime facilis aliquid non velit, alias fugiat quaerat laborum odit enim explicabo.',
-        price
+        price,
+        images:[
+          {
+            url: 'https://res.cloudinary.com/dlwicchqr/image/upload/v1743088972/CampSters/ruk3iduqx4umphxynb19.webp',
+            filename: 'CampSters/ruk3iduqx4umphxynb19',
+            
+          },
+          {
+            url: 'https://res.cloudinary.com/dlwicchqr/image/upload/v1743088972/CampSters/devklxyxxwv0lvu4kjgm.webp',
+            filename: 'CampSters/devklxyxxwv0lvu4kjgm',
+          },
+          {
+            url: 'https://res.cloudinary.com/dlwicchqr/image/upload/v1743088971/CampSters/sm3qflmtns0camfvfdlz.webp',
+            filename: 'CampSters/sm3qflmtns0camfvfdlz',
+          },
+          {
+            url: 'https://res.cloudinary.com/dlwicchqr/image/upload/v1743088971/CampSters/cvplzte4nsvol1n1dl3r.webp',
+            url: 'https://res.cloudinary.com/dlwicchqr/image/upload/v1743088972/CampSters/bsjlexaz5nyvtcvogvdb.webp',
+            filename: 'CampSters/bsjlexaz5nyvtcvogvdb',
+            
+          }
+        ],
 
       })
       await camp.save();
