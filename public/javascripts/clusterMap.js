@@ -1,5 +1,5 @@
 maptilersdk.config.apiKey = maptilerApiKey;
-
+console.log("Campgrounds data:", campgrounds);
 const map = new maptilersdk.Map({
     container: 'map',
     style: maptilersdk.MapStyle.BRIGHT,
@@ -61,15 +61,22 @@ map.on('load', function () {
     });
 
     map.on('click', 'unclustered-point', function (e) {
-        const { popUpMarkup } = e.features[0].properties;
-        const coordinates = e.features[0].geometry.coordinates.slice();
+      const { popUpMarkup } = e.features[0].properties;
+      const coordinates = e.features[0].geometry.coordinates.slice();
 
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
+      // Ensure that if the map is zoomed out such that
+      // multiple copies of the feature are visible, the
+      // popup appears over the copy being pointed to.
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      }
 
-        new maptilersdk.Popup().setLngLat(coordinates).setHTML(popUpMarkup).addTo(map);
-    });
+      new maptilersdk.Popup()
+          .setLngLat(coordinates)
+          .setHTML(popUpMarkup)
+          .addTo(map);
+  });
+
 
     map.on('mouseenter', 'clusters', () => {
         map.getCanvas().style.cursor = 'pointer';
