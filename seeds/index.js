@@ -28,6 +28,10 @@ const seedDB=async ()=>{
         title:`${sample(descriptors)} ${sample(places)}`,
         description: '  Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora itaque nobis accusamus minus omnis asperiores totam quasi fuga maxime facilis aliquid non velit, alias fugiat quaerat laborum odit enim explicabo.',
         price,
+        geometry:{
+          type:"Point",
+          coordinates:[28.6139, 77.2090]
+        },
         images:[
           {
             url: 'https://res.cloudinary.com/dlwicchqr/image/upload/v1743088972/CampSters/ruk3iduqx4umphxynb19.webp',
