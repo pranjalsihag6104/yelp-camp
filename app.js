@@ -2,7 +2,8 @@ if (process.env.NODE_ENV !== "production") {
   require('dotenv').config();
 }
 
-console.log(process.env.SECRET);
+
+
 
 const express = require('express');
 const path = require('path');
@@ -17,14 +18,16 @@ const methodOverride = require('method-override');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
+const MongoStore = require('connect-mongo');
 
-const mongoSanitize = require('express-mongo-sanitize');
 
 const userRoutes = require('./routes/users');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
+const mongoSanitize = require('express-mongo-sanitize');
+const dburl='mongodb://127.0.0.1:27017/new-yelp-camp-db';
 
-mongoose.connect('mongodb://127.0.0.1:27017/new-yelp-camp-db', {
+mongoose.connect(dburl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 
@@ -47,8 +50,20 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')))
 
+const store = MongoStore.create({
+  mongoUrl: dburl,
+  touchAfter: 24 * 60 * 60,
+  crypto: {
+      secret: 'thisshouldbeabettersecret!'
+  }
+});
+
+store.on("error",function(e){
+    console.log("Session Store Error",e)
+})
 
 const sessionConfig = {
+  store,
   secret: 'thishouldbeasecret',
   resave: false,
   saveuninitialised: true,
