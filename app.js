@@ -25,13 +25,15 @@ const userRoutes = require('./routes/users');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 const mongoSanitize = require('express-mongo-sanitize');
-const dburl='mongodb://127.0.0.1:27017/new-yelp-camp-db';
-
+const dburl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/new-yelp-camp-db';  // Use local DB as fallback
 mongoose.connect(dburl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-
-})
+}).then(() => {
+  console.log('✅ Successfully connected to MongoDB');
+}).catch(err => {
+  console.error('❌ MongoDB connection error:', err);
+});
 
 
 const db = mongoose.connection;
